@@ -4,7 +4,6 @@ Cookie: csrftoken=abcd
 Sec-Ch-Ua: 
 Sec-Ch-Ua-Mobile: ?0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.5790.171 Safari/537.36
-Sec-Ch-Ua-Platform: ""
 Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
 Sec-Fetch-Site: same-origin
 Sec-Fetch-Mode: no-cors

@@ -37,21 +37,27 @@ RequestLine requestLineParse(string content) {
 }
 
 bool isHeader(string line) {
-    if (!line.find(':')) {
-        return false; 
+    int index = (int)line.find(':');
+    if (index < 2) {
+        return false;
     }
     return true;
 }
 
-map<string, string> getHeaders() {
-    map<string, string> headers;
-    vector<string> splitted;
+vector<string> getHeader(string input) {
+    vector<string> header;
+    size_t colonPos = input.find(':');
 
-    if (isHeader(":")) {
-        splitted = split(':', ":");
-    }
+    string key = input.substr(0, colonPos);
+    string value = input.substr(colonPos + 1);
 
-    return headers;
+    trim(key);
+    trim(value);
+
+    header.push_back(key);
+    header.push_back(value);
+
+    return header;
 }
 
 string getFileContent(string filename, map<string, string> *headers) {
@@ -60,18 +66,15 @@ string getFileContent(string filename, map<string, string> *headers) {
     string request_as_string;
 
     vector<string> splitted;
+    vector<string> header;
 
     while (getline(file, text)) {
         text += "\r\n";
         request_as_string += text;
         if (isHeader(text)) {
-           splitted = split(':', text);
-           for (int i = 0; i < splitted.size(); i++) {
-                cout << splitted[i] << endl;
-           }
-        //    cout << splitted[1] << endl;
-        //    cout << headers << endl;
-        //    getHeaders();
+            header = getHeader(text);
+            cout << header[0] << endl;
+            cout << header[1] << endl;
         }
     }
 
@@ -83,7 +86,6 @@ int main() {
     string content = getFileContent("request.txt", &headers);
 
     RequestLine requestLine = requestLineParse(content);
-    // map<string, string> headers = getHeaders(content);
 
     return 0;
 }
