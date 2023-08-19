@@ -60,7 +60,7 @@ vector<string> getHeader(string input) {
     return header;
 }
 
-string getFileContent(string filename, map<string, string> *headers) {
+string getFileContent(string filename, map<string, string> &headers) {
     ifstream file(filename);
     string text;
     string request_as_string;
@@ -73,8 +73,7 @@ string getFileContent(string filename, map<string, string> *headers) {
         request_as_string += text;
         if (isHeader(text)) {
             header = getHeader(text);
-            cout << header[0] << endl;
-            cout << header[1] << endl;
+            headers[header[0]] = header[1];
         }
     }
 
@@ -83,9 +82,17 @@ string getFileContent(string filename, map<string, string> *headers) {
 
 int main() {
     map<string, string> headers;
-    string content = getFileContent("request.txt", &headers);
-
+    string content = getFileContent("request.txt", headers);
     RequestLine requestLine = requestLineParse(content);
+    HTTP http;
+
+    http.method = requestLine.method;
+    http.path = requestLine.path;
+    http.httpVersion = requestLine.httpVersion;
+    http.headers = headers;
+
+    string headersString = http.getHeaders();
+    cout << headersString << endl;
 
     return 0;
 }
