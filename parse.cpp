@@ -86,13 +86,17 @@ int main() {
     RequestLine requestLine = requestLineParse(content);
     HTTP http;
 
-    http.method = requestLine.method;
-    http.path = requestLine.path;
-    http.httpVersion = requestLine.httpVersion;
-    http.headers = headers;
+    http.setMethod(requestLine.method);
+    cout << http.getMethod() << endl;    
 
-    string headersString = http.getHeaders();
-    cout << headersString << endl;
+    http.setPath(requestLine.path);
+    cout << http.getPath() << endl;
 
+    http.setHttpVersion(requestLine.httpVersion);
+    cout << http.getHttpVersion() << endl;
+
+    http.setHeaders(headers);
+    cout << http.getHeaders() << endl;
+    
     return 0;
 }
